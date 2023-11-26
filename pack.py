@@ -58,6 +58,8 @@ def generate_pack(x):
         56: "pięćdziesiąt sześć",
         57: "pięćdziesiąt siedem",
     }
+    if x < 3 or x > 8:
+        raise ValueError("Number of symbols must be between 3 and 8.")
     symbols_on_card = x
     pack = []
     n = symbols_on_card - 1
@@ -72,8 +74,3 @@ def generate_pack(x):
                 value = (n + 1 + n * k + (i * k + j) % n) + 1
                 pack[len(pack) - 1].append(numbers_in_polish[value])
     return pack
-
-
-for card in generate_pack(8):
-    print(card)
-print(len(generate_pack(8)))
