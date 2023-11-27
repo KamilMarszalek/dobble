@@ -70,8 +70,10 @@ class Game:
                 chosen_card = choice(self._cards)
                 comp3_cards.append(chosen_card)
                 self._cards.remove(chosen_card)
-            player = Player(player_cards)
-            comp1 = Computer(comp1_cards)
-            comp2 = Computer(comp2_cards)
-            comp3 = Computer(comp3_cards)
-            return (player, comp1, comp2, comp3)
+            self.player = Player(player_cards)
+            self.comp1 = Computer(comp1_cards)
+            self.comp2 = Computer(comp2_cards)
+            self.comp3 = Computer(comp3_cards)
+
+    def change_middle_card(self, card):
+        self._middlecard = card

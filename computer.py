@@ -3,8 +3,11 @@ class Computer:
         self.cards = cards
         self.score = 0
 
+    def first_card(self):
+        return self.cards[0]
+
     def computer_wins_round(self):
-        card = self.cards[0]
+        card = self.first_card()
         self.cards.remove(card)
         self.score += 1
         if self.check():
