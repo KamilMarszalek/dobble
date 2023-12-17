@@ -6,5 +6,9 @@ class DiffLevelError(Exception):
     pass
 
 
-class InvalidEnemyAmount(Exception):
+class InvalidComputersAmount(Exception):
+    pass
+
+
+class EmptyNameError(Exception):
     pass

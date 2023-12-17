@@ -1,10 +1,12 @@
 import select
 import sys
 import termios
+from typing import Optional
 
 
-def input_with_timeout(prompt, timeout):
-    print(prompt, end="", flush=True)
+def input_with_timeout(prompt: str, timeout: int) -> Optional[str]:
+    """Enables inputs with set timeout"""
+    print(prompt, end="\n", flush=True)
     old_settings = termios.tcgetattr(sys.stdin)
     try:
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, termios.tcgetattr(sys.stdin))

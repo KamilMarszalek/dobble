@@ -1,4 +1,5 @@
-def generate_pack(x):
+def generate_pack(number_of_symbols: int) -> list[list[str]]:
+    """Generate a pack of dobble cards."""
     numbers_in_polish = {
         1: "jeden",
         2: "dwa",
@@ -58,11 +59,11 @@ def generate_pack(x):
         56: "pięćdziesiąt sześć",
         57: "pięćdziesiąt siedem",
     }
-    if x < 3 or x > 8:
+    if number_of_symbols < 3 or number_of_symbols > 8:
         raise ValueError("Number of symbols must be between 3 and 8.")
-    symbols_on_card = x
+    numbers_of_symbols = number_of_symbols
     pack = []
-    n = symbols_on_card - 1
+    n = numbers_of_symbols - 1  # n must be a prime number or a power of prime number
     for i in range(n + 1):
         pack.append([numbers_in_polish[1]])
         for j in range(n):
@@ -73,4 +74,13 @@ def generate_pack(x):
             for k in range(0, n):
                 value = (n + 1 + n * k + (i * k + j) % n) + 1
                 pack[len(pack) - 1].append(numbers_in_polish[value])
+    # if n is not a prime number or a power of prime number, pack need to be filtered
+    if numbers_of_symbols == 7:
+        filtered_pack = []
+        for i in range(len(pack) - 1):
+            common_symbols = set(pack[i]).intersection(set(pack[i + 1]))
+            if len(common_symbols) == 1:
+                filtered_pack.append(pack[i])
+        return filtered_pack
+
     return pack

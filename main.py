@@ -1,40 +1,19 @@
 from game import Game
-from input_with_timeout import input_with_timeout
+
+
+def main():
+    computers = input("How many opponents would you like to have (1, 2 or 3)?: ")
+    diff_level = input(
+        "What difficulty level are you feeling like challenging (1, 2 or 3)?: "
+    )
+    num_of_symbols = input(
+        "How many symbols on a single card would you like (from 3 to 8)?: "
+    )
+    game = Game(int(computers), int(diff_level), int(num_of_symbols))
+    game.create_cards()
+    game.deal()
+    game.play()
 
 
 if __name__ == "__main__":
-    game = Game(3, 1, 8)
-    game.create_cards()
-    game.deal()
-
-    while game.player.cards:
-        print(game._middlecard.symbols())
-        print(game.player.first_card().symbols())
-        answer = input_with_timeout("Choose the common symbol: ", 1)
-        if not answer:
-            winner = game.choose_winner()
-            symbol = winner.common_symbol(game._middlecard)
-            print(f"{winner.name} has won this round. Common symbol: {symbol}")
-            game.change_middle_card(winner.first_card())
-            winner.remove_card(winner.first_card())
-            if winner.verify_if_win():
-                print(f"{winner.name} winning it all! It runs out of cards.")
-                break
-        else:
-            if answer in game._middlecard.symbols():
-                print("You're right")
-                game.change_middle_card(game.player.first_card())
-                game.player.remove_card(game.player.first_card())
-                if game.player.verify_if_win():
-                    print("You win")
-                    break
-            else:
-                print("Wrong answer")
-                winner = game.choose_winner()
-                symbol = winner.common_symbol(game._middlecard)
-                print(f"{winner.name} has won this round. Common symbol: {symbol}")
-                game.change_middle_card(winner.first_card())
-                winner.remove_card(winner.first_card())
-                if winner.verify_if_win():
-                    print(f"{winner.name} winning it all! It runs out of cards.")
-                    break
+    main()

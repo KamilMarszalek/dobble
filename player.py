@@ -1,24 +1,23 @@
-class Player:
-    def __init__(self, cards) -> None:
-        self.cards = cards
+from card import Card
 
-    def first_card(self):
+
+class Player:
+    """Class Player represents a user.
+    Contains attributes:
+    :param cards: computer's cards
+    :type cards: list[Card]"""
+
+    def __init__(self, cards: list[Card]) -> None:
+        self.cards: list[Card] = cards
+
+    def first_card(self) -> Card:
+        """Returns first card"""
         return self.cards[0]
 
-    def remove_card(self, card):
+    def remove_card(self, card: Card) -> None:
+        """Removes card from a list of cards"""
         self.cards.remove(card)
 
-    # def verify_answer(self, answer):
-    #     first_card = self.first_card()
-    #     if answer in first_card:
-    #         self.cards.remove(first_card)
-    #         if self.verify_if_win():
-    #             return "Win"
-    #         return True
-    #     else:
-    #         return False
-
-    def verify_if_win(self):
-        if not self.cards:
-            return True
-        return False
+    def has_won(self) -> bool:
+        """Returns True if no cards left"""
+        return not self.cards

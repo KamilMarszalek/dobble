@@ -1,33 +1,15 @@
-from pack import generate_pack
+from game import Game
 import pytest
+from exceptions import DiffLevelError, InvalidComputersAmount
+from card import Card
 
 
-def test_generate_pack():
-    pack = generate_pack(3)
-    assert len(pack) == 7
-    pack = generate_pack(4)
-    assert len(pack) == 13
-    pack = generate_pack(5)
-    assert len(pack) == 21
-    pack = generate_pack(6)
-    assert len(pack) == 31
-    pack = generate_pack(8)
-    assert len(pack) == 57
-
-
-def test_generate_pack_below_3():
-    with pytest.raises(ValueError):
-        generate_pack(2)
-
-
-def test_generate_pack_over_8():
-    with pytest.raises(ValueError):
-        generate_pack(9)
-
-
-def test_generate_pack_8_symbols():
-    pack = generate_pack(8)
-    assert pack == [
+def test_game_create():
+    new_game = Game(3, 3, 8)
+    assert new_game.amount_of_computers == 3
+    assert new_game.diff_level == 3
+    assert new_game.number_of_symbols == 8
+    assert new_game._pack == [
         ["jeden", "dwa", "trzy", "cztery", "pięć", "sześć", "siedem", "osiem"],
         [
             "jeden",
@@ -590,3 +572,98 @@ def test_generate_pack_8_symbols():
             "pięćdziesiąt jeden",
         ],
     ]
+
+
+def test_game_create_invalid_amount_of_computers():
+    with pytest.raises(InvalidComputersAmount):
+        Game(4, 3, 3)
+
+
+def test_game_create_not_existing_diff_level():
+    with pytest.raises(DiffLevelError):
+        Game(3, 4, 8)
+
+
+def test_game_set_timeout():
+    game1 = Game(3, 3, 8)
+    game1.set_timeout()
+    assert game1._timeout == 5
+    game2 = Game(3, 2, 8)
+    game2.set_timeout()
+    assert game2._timeout == 15
+    game3 = Game(3, 1, 8)
+    game3.set_timeout()
+    assert game3._timeout == 25
+
+
+def test_game_create_cards():
+    game1 = Game(3, 3, 8)
+    game1.create_cards()
+    assert len(game1._cards) == 57
+    for i in range(len(game1._cards) - 1):
+        common_symbols = set(game1._cards[i].symbols).intersection(
+            set(game1._cards[i + 1].symbols)
+        )
+        assert len(common_symbols) == 1
+
+
+def test_game_deal():
+    game1 = Game(3, 3, 8)
+    game1.create_cards()
+    assert len(game1._cards) == 57
+    game1.deal()
+    assert len(game1._cards) == 0
+    assert len(game1.comp1.cards) == 14
+    assert len(game1.comp2.cards) == 14
+    assert len(game1.comp3.cards) == 14
+    assert len(game1.player.cards) == 14
+    assert game1.comp1.cards != game1.comp2.cards
+    assert game1.comp1.cards != game1.comp3.cards
+    assert game1.comp1.cards != game1.player.cards
+    assert game1.comp2.cards != game1.comp1.cards
+    assert game1.comp2.cards != game1.comp3.cards
+    assert game1.comp2.cards != game1.player.cards
+    assert game1.comp3.cards != game1.comp1.cards
+    assert game1.comp3.cards != game1.comp2.cards
+    assert game1.comp3.cards != game1.player.cards
+    game1 = Game(2, 3, 6)
+    game1.create_cards()
+    assert len(game1._cards) == 31
+    game1.deal()
+    assert len(game1._cards) == 0
+    assert len(game1.comp1.cards) == 10
+    assert len(game1.comp2.cards) == 10
+    assert len(game1.player.cards) == 10
+    assert game1.comp1.cards != game1.comp2.cards
+    assert game1.comp1.cards != game1.player.cards
+    assert game1.comp2.cards != game1.player.cards
+
+    game1 = Game(1, 3, 3)
+    game1.create_cards()
+    assert len(game1._cards) == 7
+    game1.deal()
+    assert len(game1._cards) == 0
+    assert len(game1.comp1.cards) == 3
+    assert len(game1.player.cards) == 3
+    assert game1.comp1.cards != game1.player.cards
+
+
+def test_game_change_middle_card():
+    card = Card(["a", "b", "c"])
+    game = Game(3, 3, 8)
+    game.create_cards()
+    game.deal()
+    game.change_middle_card(card)
+    assert game._middlecard == card
+
+
+def test_game_choose_winner(monkeypatch):
+    game = Game(3, 3, 8)
+    game.create_cards()
+    game.deal()
+    monkeypatch.setattr("game.choice", lambda x: x[1])
+    assert game.choose_winner() == game.comp2
+    monkeypatch.setattr("game.choice", lambda x: x[2])
+    assert game.choose_winner() == game.comp3
+    monkeypatch.setattr("game.choice", lambda x: x[0])
+    assert game.choose_winner() == game.comp1
