@@ -36,12 +36,16 @@ class Game:
         self._diff_level: int = diff_level
         self._numbers_of_symbols: int = number_of_symbols
         self._pack: list[list[str]] = generate_pack(self._numbers_of_symbols)
+        self.player = None
+        self.computer_player1 = None
+        self.computer_player2 = None
+        self.computer_player3 = None
 
     @property
     def amount_of_computers(self) -> int:
         return self._amount_of_computers
 
-    def set_timeout(self) -> None:
+    def set_timeout(self) -> int:
         """According to difficulty level it sets right timeout"""
         if self.diff_level == 1:
             self._timeout: int = 25
@@ -49,6 +53,7 @@ class Game:
             self._timeout: int = 15
         else:
             self._timeout: int = 5
+        return self._timeout
 
     @amount_of_computers.setter
     def amount_of_computers(self, amount: int) -> None:
@@ -98,43 +103,59 @@ class Game:
     def deal(self) -> None:
         """Deals cards between players."""
         middlecard: Card = choice(self._cards)
-        self._middlecard: Card = middlecard
+        self.middlecard: Card = middlecard
         self._cards.remove(middlecard)
         if self.amount_of_computers == 3:
             cards_per_person = len(self._cards) // 4
-            self.comp1 = self.deal_one_player(cards_per_person, "Computer 1")
-            self.comp2 = self.deal_one_player(cards_per_person, "Computer 2")
-            self.comp3 = self.deal_one_player(cards_per_person, "Computer 3")
+            self.computer_player1 = self.deal_one_player(cards_per_person, "Computer 1")
+            self.computer_player2 = self.deal_one_player(cards_per_person, "Computer 2")
+            self.computer_player3 = self.deal_one_player(cards_per_person, "Computer 3")
             self.player = self.deal_one_player(cards_per_person)
+            self.comps = [
+                self.computer_player1,
+                self.computer_player2,
+                self.computer_player3,
+            ]
         elif self.amount_of_computers == 2:
             cards_per_person = len(self._cards) // 3
-            self.comp1 = self.deal_one_player(cards_per_person, "Computer 1")
-            self.comp2 = self.deal_one_player(cards_per_person, "Computer 2")
+            self.computer_player1 = self.deal_one_player(cards_per_person, "Computer 1")
+            self.computer_player2 = self.deal_one_player(cards_per_person, "Computer 2")
             self.player = self.deal_one_player(cards_per_person)
+            self.comps = [self.computer_player1, self.computer_player2]
         else:
             cards_per_person = len(self._cards) // 2
-            self.comp1 = self.deal_one_player(cards_per_person, "Computer 1")
+            self.computer_player1 = self.deal_one_player(cards_per_person, "Computer 1")
             self.player = self.deal_one_player(cards_per_person)
+            self.comps = [self.computer_player1]
 
     def change_middle_card(self, card: Card) -> None:
         """Enables to change the card on the table"""
-        self._middlecard: Card = card
+        self.middlecard: Card = card
 
     def choose_winner(self) -> Computer:
         """Chooses winner of a single round between computer players
         if player did not answer right"""
         if self._amount_of_computers == 3:
-            winner: Computer = choice([self.comp1, self.comp2, self.comp3])
+            winner: Computer = choice(
+                [self.computer_player1, self.computer_player2, self.computer_player3]
+            )
         elif self._amount_of_computers == 2:
-            winner: Computer = choice([self.comp1, self.comp2])
+            winner: Computer = choice([self.computer_player1, self.computer_player2])
         else:
-            winner: Computer = self.comp1
+            winner: Computer = self.computer_player1
         return winner
+
+    def verify_if_game_has_ended(self) -> Optional[str]:
+        if self.player.has_won():
+            return "You win."
+        for comp in self.comps:
+            if comp.has_won():
+                return f"{comp.name} wins."
 
     def player_failed(self) -> Optional[bool]:
         """Handles situation if player did not manage to find common symbol."""
         winner = self.choose_winner()
-        symbol = winner.common_symbol(self._middlecard)
+        symbol = winner.common_symbol(self.middlecard)
         print(f"{winner.name} has won this round. Common symbol: {symbol}")
         self.change_middle_card(winner.first_card())
         winner.remove_card(winner.first_card())
@@ -145,7 +166,7 @@ class Game:
     def play(self) -> None:
         """Interface of the game"""
         while self.player.cards:
-            print(self._middlecard.symbols)
+            print(self.middlecard.symbols)
             print(self.player.first_card().symbols)
             self.set_timeout()
             answer = input_with_timeout(
@@ -157,7 +178,7 @@ class Game:
                     break
             else:
                 if (
-                    answer in self._middlecard.symbols
+                    answer in self.middlecard.symbols
                     and answer in self.player.first_card().symbols
                 ):
                     print("You're right")

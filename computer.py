@@ -19,11 +19,11 @@ class Computer(Player):
         self._name: str = name
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self._name
 
     @name.setter
-    def name(self, new_name):
+    def name(self, new_name: str) -> None:
         if not new_name:
             raise EmptyNameError("Name cannot be empty")
         self._name = new_name

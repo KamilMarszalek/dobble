@@ -1,5 +1,8 @@
 from random import shuffle
 from exceptions import SymbolsError
+import pygame
+from constants import RED, WHITE, CARD_WIDTH, CARD_HEIGHT
+from typing import Optional
 
 
 class Card:
@@ -10,6 +13,7 @@ class Card:
 
     def __init__(self, symbols: list[str]) -> None:
         self._symbols: list[str] = symbols
+        self._symbol_rects = []
 
     @property
     def symbols(self) -> list[str]:
@@ -28,6 +32,35 @@ class Card:
             )
         self._symbols = symbols
 
-    def shuffle_symbols(self):
+    def shuffle_symbols(self) -> None:
         """Shuffles symbols on a card."""
         shuffle(self._symbols)
+
+    def draw_card(self, window, x, y) -> None:
+        """Draws the card's symbols on the given window at the given position."""
+        self._symbol_rects.clear()
+        font = pygame.font.Font(None, 24)
+
+        pygame.draw.rect(
+            window, WHITE, (x, y, CARD_WIDTH, CARD_HEIGHT), border_radius=10
+        )
+
+        for i, symbol in enumerate(self._symbols):
+            symbol_x = 10 + x
+            symbol_y = 10 + y + i * 30
+
+            text_surface = font.render(symbol, True, RED)
+
+            window.blit(text_surface, (symbol_x, symbol_y))
+
+            text_rect = text_surface.get_rect(topleft=(symbol_x, symbol_y))
+            self._symbol_rects.append((symbol, text_rect))
+
+    def handle_click(self, pos) -> Optional[str]:
+        """Handles a click event. If symbol is clicked,
+        returns the symbol. If no symbol is clicked, returns None"""
+        for symbol, rect in self._symbol_rects:
+            if rect.collidepoint(pos):
+                print(f"You clicked on symbol {symbol}")
+                return symbol
+        return None

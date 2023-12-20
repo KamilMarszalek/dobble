@@ -613,39 +613,39 @@ def test_game_deal():
     assert len(game1._cards) == 57
     game1.deal()
     assert len(game1._cards) == 0
-    assert len(game1.comp1.cards) == 14
-    assert len(game1.comp2.cards) == 14
-    assert len(game1.comp3.cards) == 14
+    assert len(game1.computer_player1.cards) == 14
+    assert len(game1.computer_player2.cards) == 14
+    assert len(game1.computer_player3.cards) == 14
     assert len(game1.player.cards) == 14
-    assert game1.comp1.cards != game1.comp2.cards
-    assert game1.comp1.cards != game1.comp3.cards
-    assert game1.comp1.cards != game1.player.cards
-    assert game1.comp2.cards != game1.comp1.cards
-    assert game1.comp2.cards != game1.comp3.cards
-    assert game1.comp2.cards != game1.player.cards
-    assert game1.comp3.cards != game1.comp1.cards
-    assert game1.comp3.cards != game1.comp2.cards
-    assert game1.comp3.cards != game1.player.cards
+    assert game1.computer_player1.cards != game1.computer_player2.cards
+    assert game1.computer_player1.cards != game1.computer_player3.cards
+    assert game1.computer_player1.cards != game1.player.cards
+    assert game1.computer_player2.cards != game1.computer_player1.cards
+    assert game1.computer_player2.cards != game1.computer_player3.cards
+    assert game1.computer_player2.cards != game1.player.cards
+    assert game1.computer_player3.cards != game1.computer_player1.cards
+    assert game1.computer_player3.cards != game1.computer_player2.cards
+    assert game1.computer_player3.cards != game1.player.cards
     game1 = Game(2, 3, 6)
     game1.create_cards()
     assert len(game1._cards) == 31
     game1.deal()
     assert len(game1._cards) == 0
-    assert len(game1.comp1.cards) == 10
-    assert len(game1.comp2.cards) == 10
+    assert len(game1.computer_player1.cards) == 10
+    assert len(game1.computer_player2.cards) == 10
     assert len(game1.player.cards) == 10
-    assert game1.comp1.cards != game1.comp2.cards
-    assert game1.comp1.cards != game1.player.cards
-    assert game1.comp2.cards != game1.player.cards
+    assert game1.computer_player1.cards != game1.computer_player2.cards
+    assert game1.computer_player1.cards != game1.player.cards
+    assert game1.computer_player2.cards != game1.player.cards
 
     game1 = Game(1, 3, 3)
     game1.create_cards()
     assert len(game1._cards) == 7
     game1.deal()
     assert len(game1._cards) == 0
-    assert len(game1.comp1.cards) == 3
+    assert len(game1.computer_player1.cards) == 3
     assert len(game1.player.cards) == 3
-    assert game1.comp1.cards != game1.player.cards
+    assert game1.computer_player1.cards != game1.player.cards
 
 
 def test_game_change_middle_card():
@@ -654,7 +654,7 @@ def test_game_change_middle_card():
     game.create_cards()
     game.deal()
     game.change_middle_card(card)
-    assert game._middlecard == card
+    assert game.middlecard == card
 
 
 def test_game_choose_winner(monkeypatch):
@@ -662,8 +662,8 @@ def test_game_choose_winner(monkeypatch):
     game.create_cards()
     game.deal()
     monkeypatch.setattr("game.choice", lambda x: x[1])
-    assert game.choose_winner() == game.comp2
+    assert game.choose_winner() == game.computer_player2
     monkeypatch.setattr("game.choice", lambda x: x[2])
-    assert game.choose_winner() == game.comp3
+    assert game.choose_winner() == game.computer_player3
     monkeypatch.setattr("game.choice", lambda x: x[0])
-    assert game.choose_winner() == game.comp1
+    assert game.choose_winner() == game.computer_player1

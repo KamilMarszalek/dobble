@@ -5,7 +5,9 @@ from typing import Optional
 
 
 def input_with_timeout(prompt: str, timeout: int) -> Optional[str]:
-    """Enables inputs with set timeout"""
+    """Enables inputs with set timeout.
+    Returns string if player write something,
+    otherwise None."""
     print(prompt, end="\n", flush=True)
     old_settings = termios.tcgetattr(sys.stdin)
     try:

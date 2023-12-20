@@ -12,12 +12,13 @@ class Player:
 
     def first_card(self) -> Card:
         """Returns first card"""
-        return self.cards[0]
+        if self.cards:
+            return self.cards[0]
 
     def remove_card(self, card: Card) -> None:
         """Removes card from a list of cards"""
         self.cards.remove(card)
 
     def has_won(self) -> bool:
-        """Returns True if no cards left"""
+        """Returns True if no cards left, otherwise False."""
         return not self.cards
