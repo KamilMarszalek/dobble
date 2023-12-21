@@ -1,8 +1,8 @@
 from random import shuffle
-from exceptions import SymbolsError
-import pygame
-from constants import RED, WHITE, CARD_WIDTH, CARD_HEIGHT
 from typing import Optional
+import pygame
+from exceptions import SymbolsError
+from constants import RED, WHITE, CARD_WIDTH, CARD_HEIGHT
 
 
 class Card:
@@ -62,6 +62,5 @@ class Card:
         returns the symbol. If no symbol is clicked, returns None"""
         for symbol, rect in self._symbol_rects:
             if rect.collidepoint(pos):
-                print(f"You clicked on symbol {symbol}")
                 return symbol
         return None

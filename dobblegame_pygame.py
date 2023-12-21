@@ -9,6 +9,17 @@ import random
 
 
 class DobbleGame:
+    """Class DobbleGame represents a whole game of dobble in pygame.
+    It uses methods of class Game to run the game in pygame.
+    Contains attributes:
+    :param amount_of_computers: amount of computers participating in a game (from 1 to 3)
+    :type symbols: int
+    :param diff_level: difficulty level of the game (from 1 to 3)
+    :type: int
+    :param number_of_symbols: amount of symbols on a single card (from 3 to 8)
+    :type: int
+    """
+
     def __init__(self, amount_of_computers, diff_level, number_of_symbols) -> None:
         pygame.font.init()
         self.game = Game(amount_of_computers, diff_level, number_of_symbols)
@@ -27,6 +38,8 @@ class DobbleGame:
         self.run = True
 
     def display_message(self, message: str, color) -> None:
+        """Method display_message is responsible for
+        showing the final result of the game."""
         text_surface = self.font.render(message, True, color)
         text_rect = text_surface.get_rect()
         padding = 10
@@ -38,12 +51,15 @@ class DobbleGame:
         pygame.display.update()
         pygame.time.wait(3000)
 
-    def draw_card(self, player: Union[Player, Computer], x: int, y: int):
+    def draw_card(self, player: Union[Player, Computer], x: int, y: int) -> None:
+        """Draw a single card for given player."""
         if player:
             if player.first_card():
                 player.first_card().draw_card(self.win, x, y)
 
-    def run_game(self):
+    def run_game(self) -> None:
+        """Handles the game of Dobble.
+        Handles events, draws cards"""
         while self.run:
             self.clock.tick(FPS)
             self.win.fill(BACKGROUND)

@@ -18,8 +18,9 @@ from constants import (
 class Game:
     """Class Game represents a whole game of dobble.
     It handle every element of the game.
+    Calling play method enables to play in the terminal.
     Contains attributes:
-    :param amount_of_computers: amount of computers participating in a game.
+    :param amount_of_computers: amount of computers participating in a game (from 1 to 3)
     :type symbols: int
     :param diff_level: difficulty level of the game (from 1 to 3)
     :type: int

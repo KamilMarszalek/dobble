@@ -32,6 +32,5 @@ class Computer(Player):
         """Finds the common symbol between
         First card in computer's pack and given card."""
         first_card: Card = self.first_card()
-        for symbol in first_card.symbols:
-            if symbol in card.symbols:
-                return symbol
+        common_symbols = set(first_card.symbols) & set(card.symbols)
+        return next(iter(common_symbols), None)
