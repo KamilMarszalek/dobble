@@ -26,7 +26,7 @@ class DobbleGame:
         )
         self.run = True
 
-    def display_message(self, message, color):
+    def display_message(self, message: str, color: tuple(int)) -> None:
         text_surface = self.font.render(message, True, color)
         text_rect = text_surface.get_rect()
         padding = 10
