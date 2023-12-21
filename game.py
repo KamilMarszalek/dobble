@@ -1,13 +1,18 @@
 from pack import generate_pack
 from card import Card
-from exceptions import DiffLevelError, InvalidComputersAmount
+from exceptions import DiffLevelError, InvalidComputersAmount, SymbolsError
 from random import choice, randint
 from player import Player
 from computer import Computer
 from input_with_timeout import input_with_timeout
 from typing import Union, Optional
-
-LEVELS: list[int] = [1, 2, 3]
+from constants import (
+    MAX_COMPUTERS,
+    MIN_COMPUTERS,
+    MIN_SYMBOLS,
+    MAX_SYMBOLS,
+    LEVELS,
+)
 
 
 class Game:
@@ -26,13 +31,16 @@ class Game:
         self, amount_of_computers: int, diff_level: int, number_of_symbols: int
     ) -> None:
         self._levels: list[int] = LEVELS
-        if amount_of_computers > 3 or amount_of_computers < 1:
+        if amount_of_computers > MAX_COMPUTERS or amount_of_computers < MIN_COMPUTERS:
             text_error = "Amount of enemies must be between 1 and 3."
             raise InvalidComputersAmount(text_error)
         self._amount_of_computers: int = amount_of_computers
         if diff_level not in self._levels:
             text_error = "Difficulty level not found in the available options."
             raise DiffLevelError(text_error)
+        if number_of_symbols > MAX_SYMBOLS or number_of_symbols < MIN_SYMBOLS:
+            text_error = "Number of symbols must be between 3 and 8."
+            raise SymbolsError(text_error)
         self._diff_level: int = diff_level
         self._numbers_of_symbols: int = number_of_symbols
         self._pack: list[list[str]] = generate_pack(self._numbers_of_symbols)

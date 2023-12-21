@@ -1,11 +1,16 @@
 import tkinter as tk
+from constants import (
+    MIN_COMPUTERS,
+    MAX_COMPUTERS,
+    MAX_DIFF_LEVEL,
+    MIN_DIFF_LEVEL,
+    MIN_SYMBOLS,
+    MAX_SYMBOLS,
+)
 
-MIN_COMPUTERS = 1
-MAX_COMPUTERS = 3
-MIN_DIFF_LEVEL = 1
-MAX_DIFF_LEVEL = 3
-MIN_SYMBOLS = 3
-MAX_SYMBOLS = 8
+
+def rgb_to_hex(rgb):
+    return "#%02x%02x%02x" % rgb
 
 
 class Menu:
