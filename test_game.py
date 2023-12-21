@@ -2,6 +2,8 @@ from game import Game
 import pytest
 from exceptions import DiffLevelError, InvalidComputersAmount
 from card import Card
+from computer import Computer
+from player import Player
 
 
 def test_game_create():
@@ -605,6 +607,31 @@ def test_game_create_cards():
             set(game1._cards[i + 1].symbols)
         )
         assert len(common_symbols) == 1
+    game1 = Game(3, 3, 3)
+    game1.create_cards()
+    assert len(game1._cards) == 7
+    for i in range(len(game1._cards) - 1):
+        common_symbols = set(game1._cards[i].symbols).intersection(
+            set(game1._cards[i + 1].symbols)
+        )
+        assert len(common_symbols) == 1
+
+
+def test_game_deal_one_player_name_given():
+    game = Game(3, 3, 8)
+    game.create_cards()
+    computer = game.deal_one_player(14, "computer_player")
+    assert len(computer.cards) == 14
+    assert computer.name == "computer_player"
+    assert type(computer) == Computer
+
+
+def test_game_deal_one_player__no_name_given():
+    game = Game(3, 3, 8)
+    game.create_cards()
+    player = game.deal_one_player(14)
+    assert len(player.cards) == 14
+    assert type(player) == Player
 
 
 def test_game_deal():
@@ -667,3 +694,58 @@ def test_game_choose_winner(monkeypatch):
     assert game.choose_winner() == game.computer_player3
     monkeypatch.setattr("game.choice", lambda x: x[0])
     assert game.choose_winner() == game.computer_player1
+
+
+def test_game_verify_if_game_has_ended_player_wins():
+    game = Game(3, 3, 8)
+    game.create_cards()
+    game.deal()
+    assert game.verify_if_game_has_ended() is None
+    game.player.cards = []
+    assert game.verify_if_game_has_ended() == "You win."
+
+
+def test_game_verify_if_game_has_ended_computer_wins():
+    game = Game(3, 3, 8)
+    game.create_cards()
+    game.deal()
+    assert game.verify_if_game_has_ended() is None
+    game.computer_player1.cards = []
+    assert game.verify_if_game_has_ended() == "Computer 1 wins."
+    game = Game(3, 3, 8)
+    game.create_cards()
+    game.deal()
+    assert game.verify_if_game_has_ended() is None
+    game.computer_player2.cards = []
+    assert game.verify_if_game_has_ended() == "Computer 2 wins."
+    game = Game(3, 3, 8)
+    game.create_cards()
+    game.deal()
+    assert game.verify_if_game_has_ended() is None
+    game.computer_player3.cards = []
+    assert game.verify_if_game_has_ended() == "Computer 3 wins."
+
+
+def test_game_player_failed_no_winner(monkeypatch):
+    game = Game(3, 3, 8)
+    monkeypatch.setattr("game.choice", lambda x: x[0])
+    game.create_cards()
+    game.deal()
+    assert game.player_failed() is None
+    assert len(game.player.cards) == 14
+    assert len(game.computer_player1.cards) == 13
+    assert len(game.computer_player2.cards) == 14
+    assert len(game.computer_player3.cards) == 14
+
+
+def test_game_player_failed_winner(monkeypatch):
+    game = Game(3, 3, 8)
+    monkeypatch.setattr("game.choice", lambda x: x[0])
+    game.create_cards()
+    game.deal()
+    game.computer_player1.cards = game.computer_player1.cards[1:2]
+    assert game.player_failed() is True
+    assert len(game.player.cards) == 14
+    assert len(game.computer_player1.cards) == 0
+    assert len(game.computer_player2.cards) == 14
+    assert len(game.computer_player3.cards) == 14

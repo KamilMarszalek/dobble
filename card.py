@@ -42,12 +42,13 @@ class Card:
         font = pygame.font.Font(None, 24)
 
         pygame.draw.rect(
-            window, WHITE, (x, y, CARD_WIDTH, CARD_HEIGHT), border_radius=10
+            window, WHITE, (x, y, CARD_WIDTH, CARD_HEIGHT), border_radius=12
         )
 
+        padding_beetween_symbols = CARD_HEIGHT / (len(self._symbols) + 2)
         for i, symbol in enumerate(self._symbols):
             symbol_x = 10 + x
-            symbol_y = 10 + y + i * 30
+            symbol_y = y + padding_beetween_symbols * (i + 1)
 
             text_surface = font.render(symbol, True, RED)
 
