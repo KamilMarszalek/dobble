@@ -39,7 +39,7 @@ class Card:
     def draw_card(self, window, x, y) -> None:
         """Draws the card's symbols on the given window at the given position."""
         self._symbol_rects.clear()
-        font = pygame.font.Font(None, 24)
+        font = pygame.font.Font(None, 26)
 
         pygame.draw.rect(
             window, WHITE, (x, y, CARD_WIDTH, CARD_HEIGHT), border_radius=12

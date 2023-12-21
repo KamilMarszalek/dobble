@@ -1,11 +1,10 @@
+import random
+from typing import Union
 import pygame
-from card import Card
 from game import Game
 from constants import WIDTH, HEIGHT, FPS, BACKGROUND, BLUE, WHITE
 from player import Player
 from computer import Computer
-from typing import Union
-import random
 
 
 class DobbleGame:
@@ -57,6 +56,23 @@ class DobbleGame:
             if player.first_card():
                 player.first_card().draw_card(self.win, x, y)
 
+    def draw_board(self):
+        """Calls draw_card to draw cards for all players"""
+        self.draw_card(self.game.player, 500, 700)
+        self.game.middlecard.draw_card(self.win, 500, 375)
+        self.draw_card(self.game.computer_player1, 500, 25)
+        self.draw_card(self.game.computer_player2, 900, 375)
+        self.draw_card(self.game.computer_player3, 100, 375)
+
+    def player_failed(self):
+        """Handles a situation when player failed.
+        It uses methods from Game class."""
+        self.game.player_failed()
+        if self.game.verify_if_game_has_ended() is not None:
+            self.display_message("YOU LOSE", BLUE)
+            self.run = False
+            return True
+
     def run_game(self) -> None:
         """Handles the game of Dobble.
         Handles events, draws cards"""
@@ -86,21 +102,14 @@ class DobbleGame:
                                 self.run = False
                                 break
                         else:
-                            self.game.player_failed()
-                            if self.game.verify_if_game_has_ended() is not None:
-                                self.display_message("YOU LOSE", BLUE)
-                                self.run = False
+                            self.player_failed()
+                            if not self.run:
                                 break
+
                 elif event.type == self.player_failed_event:
-                    self.game.player_failed()
-                    if self.game.verify_if_game_has_ended() is not None:
-                        self.display_message("YOU LOSE", BLUE)
-                        self.run = False
+                    self.player_failed()
+                    if not self.run:
                         break
-            self.draw_card(self.game.player, 500, 700)
-            self.game.middlecard.draw_card(self.win, 500, 375)
-            self.draw_card(self.game.computer_player1, 500, 25)
-            self.draw_card(self.game.computer_player2, 900, 375)
-            self.draw_card(self.game.computer_player3, 100, 375)
+            self.draw_board()
             pygame.display.update()
         pygame.quit()
