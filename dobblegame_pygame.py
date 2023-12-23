@@ -100,8 +100,8 @@ class DobbleGame:
                     timeout = self.game.set_timeout() * 1000
                     pygame.time.set_timer(self.player_failed_event, timeout)
                     mouse_pos = pygame.mouse.get_pos()
-                    clicked_symbol = self.game.player.first_card().handle_click(
-                        mouse_pos
+                    clicked_symbol = (
+                        self.game.player.first_card().handle_click(mouse_pos)
                     )
                     if clicked_symbol is not None:
                         if clicked_symbol in self.game.middlecard.symbols:

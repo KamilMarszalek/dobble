@@ -64,9 +64,11 @@ class Menu:
             orient="horizontal",
         )
         computers.pack(pady=20)
-
+        diff_level_text = (
+            "What difficulty level do you feel like challenging yourself?"
+        )
         diff_level_label = tk.Label(
-            text="What difficulty level do you feel like challenging yourself?",
+            text=diff_level_text,
             font=("Arial", 20, "normal"),
         )
         diff_level_label.pack(pady=20)

@@ -33,7 +33,10 @@ class Game:
         self, amount_of_computers: int, diff_level: int, number_of_symbols: int
     ) -> None:
         self._levels: list[int] = LEVELS
-        if amount_of_computers > MAX_COMPUTERS or amount_of_computers < MIN_COMPUTERS:
+        if (
+            amount_of_computers > MAX_COMPUTERS
+            or amount_of_computers < MIN_COMPUTERS
+        ):
             text_error = "Amount of enemies must be between 1 and 3."
             raise InvalidComputersAmount(text_error)
         self._amount_of_computers: int = amount_of_computers
