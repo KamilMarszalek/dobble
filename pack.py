@@ -97,6 +97,3 @@ def generate_approximate_dobble_pack(total_symbols, symbols_per_card, max_cards)
         ready_pack.append([NUMBERS_IN_POLISH[symbol] for symbol in card])
     print(pack)
     return ready_pack
-
-
-generate_approximate_dobble_pack(46, 7, 43)

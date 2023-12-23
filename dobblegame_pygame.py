@@ -91,9 +91,6 @@ class DobbleGame:
                         mouse_pos
                     )
                     if clicked_symbol is not None:
-                        print(
-                            f"You clicked on symbol {clicked_symbol} on the player's card"
-                        )
                         if clicked_symbol in self.game.middlecard.symbols:
                             self.game.change_middle_card(self.game.player.first_card())
                             self.game.player.remove_card(self.game.player.first_card())
