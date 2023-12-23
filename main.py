@@ -4,15 +4,19 @@ from game import Game
 def main() -> None:
     """Handle Dobble game in a terminal environment.
 
-    This function sets up and executes a terminal-based version of the Dobble (Spot It!) game.
-    It allows the player to choose the number of computer opponents, the difficulty level,
+    This function sets up and executes a terminal-based version of the
+    Dobble (Spot It!) game.
+    It allows the player to choose the number of computer opponents,
+    the difficulty level,
     and the number of symbols per card.
 
     Note:
         The terminal must be Unix-based for optimal gameplay experience.
 
     """
-    computers = input("How many opponents would you like to have (1, 2 or 3)?: ")
+    computers = input(
+        "How many opponents would you like to have (1, 2 or 3)?: ",
+    )
     diff_level = input(
         "What difficulty level are you feeling like challenging (1, 2 or 3)?: "
     )

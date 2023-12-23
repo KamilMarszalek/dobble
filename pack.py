@@ -67,8 +67,8 @@ def generate_pack(number_of_symbols: int) -> list[list[str]]:
         raise ValueError("Number of symbols must be between 3 and 8.")
     numbers_of_symbols = number_of_symbols
     pack = []
-    n = numbers_of_symbols - 1  # n must be a prime number or a power of prime number
-    if n == 6:  # for seven symbols per card standard approach cannot be applied
+    n = numbers_of_symbols - 1  # n must be a power of prime number
+    if n == 6:  # for 7 symbols per card standard approach cannot be applied
         return generate_approximate_dobble_pack(43, 7, 43)
     for i in range(n + 1):
         pack.append([NUMBERS_IN_POLISH[1]])
@@ -83,7 +83,9 @@ def generate_pack(number_of_symbols: int) -> list[list[str]]:
     return pack
 
 
-def generate_approximate_dobble_pack(total_symbols, symbols_per_card, max_cards):
+def generate_approximate_dobble_pack(
+    total_symbols, symbols_per_card, max_cards
+) -> list[list[str]]:
     symbols = list(range(1, total_symbols + 1))
     pack = []
     ready_pack = []

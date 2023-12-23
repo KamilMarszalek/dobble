@@ -22,9 +22,11 @@ class Card:
 
     @symbols.setter
     def symbols(self, symbols: list[str]) -> None:
-        """Sets the symbols on the card, ensuring the new symbols have the same length as the old ones.
+        """Sets the symbols on the card,
+        ensuring the new symbols have the same length as the old ones.
         Raises:
-        SymbolError: If the length of the new symbols is not equal to the length of the old ones.
+        SymbolError: If the length of the new symbols
+        is not equal to the length of the old ones.
         """
         if len(symbols) != len(self._symbols):
             raise SymbolsError(
@@ -37,7 +39,8 @@ class Card:
         shuffle(self._symbols)
 
     def draw_card(self, window, x, y) -> None:
-        """Draws the card's symbols on the given window at the given position."""
+        """Draws the card's symbols on the
+        given window at the given position."""
         self._symbol_rects.clear()
         font = pygame.font.Font(None, 25)
 

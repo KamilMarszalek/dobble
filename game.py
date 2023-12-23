@@ -20,7 +20,8 @@ class Game:
     It handle every element of the game.
     Calling play method enables to play in the terminal.
     Contains attributes:
-    :param amount_of_computers: amount of computers participating in a game (from 1 to 3)
+    :param amount_of_computers: amount of computers participating in a game
+    (from 1 to 3)
     :type symbols: int
     :param diff_level: difficulty level of the game (from 1 to 3)
     :type: int
@@ -116,9 +117,18 @@ class Game:
         self._cards.remove(middlecard)
         if self.amount_of_computers == 3:
             cards_per_person = len(self._cards) // 4
-            self.computer_player1 = self.deal_one_player(cards_per_person, "Computer 1")
-            self.computer_player2 = self.deal_one_player(cards_per_person, "Computer 2")
-            self.computer_player3 = self.deal_one_player(cards_per_person, "Computer 3")
+            self.computer_player1 = self.deal_one_player(
+                cards_per_person,
+                "Computer 1",
+            )
+            self.computer_player2 = self.deal_one_player(
+                cards_per_person,
+                "Computer 2",
+            )
+            self.computer_player3 = self.deal_one_player(
+                cards_per_person,
+                "Computer 3",
+            )
             self.player = self.deal_one_player(cards_per_person)
             self.comps = [
                 self.computer_player1,
@@ -127,13 +137,22 @@ class Game:
             ]
         elif self.amount_of_computers == 2:
             cards_per_person = len(self._cards) // 3
-            self.computer_player1 = self.deal_one_player(cards_per_person, "Computer 1")
-            self.computer_player2 = self.deal_one_player(cards_per_person, "Computer 2")
+            self.computer_player1 = self.deal_one_player(
+                cards_per_person,
+                "Computer 1",
+            )
+            self.computer_player2 = self.deal_one_player(
+                cards_per_person,
+                "Computer 2",
+            )
             self.player = self.deal_one_player(cards_per_person)
             self.comps = [self.computer_player1, self.computer_player2]
         else:
             cards_per_person = len(self._cards) // 2
-            self.computer_player1 = self.deal_one_player(cards_per_person, "Computer 1")
+            self.computer_player1 = self.deal_one_player(
+                cards_per_person,
+                "Computer 1",
+            )
             self.player = self.deal_one_player(cards_per_person)
             self.comps = [self.computer_player1]
 
@@ -146,10 +165,16 @@ class Game:
         if player did not answer right"""
         if self._amount_of_computers == 3:
             winner: Computer = choice(
-                [self.computer_player1, self.computer_player2, self.computer_player3]
+                [
+                    self.computer_player1,
+                    self.computer_player2,
+                    self.computer_player3,
+                ]
             )
         elif self._amount_of_computers == 2:
-            winner: Computer = choice([self.computer_player1, self.computer_player2])
+            winner: Computer = choice(
+                [self.computer_player1, self.computer_player2],
+            )
         else:
             winner: Computer = self.computer_player1
         return winner

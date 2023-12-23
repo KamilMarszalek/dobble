@@ -11,7 +11,8 @@ class DobbleGame:
     """Class DobbleGame represents a whole game of dobble in pygame.
     It uses methods of class Game to run the game in pygame.
     Contains attributes:
-    :param amount_of_computers: amount of computers participating in a game (from 1 to 3)
+    :param amount_of_computers: amount of computers participating in a game
+    (from 1 to 3)
     :type symbols: int
     :param diff_level: difficulty level of the game (from 1 to 3)
     :type: int
@@ -19,7 +20,12 @@ class DobbleGame:
     :type: int
     """
 
-    def __init__(self, amount_of_computers, diff_level, number_of_symbols) -> None:
+    def __init__(
+        self,
+        amount_of_computers,
+        diff_level,
+        number_of_symbols,
+    ) -> None:
         pygame.font.init()
         self.game = Game(amount_of_computers, diff_level, number_of_symbols)
         self.game.create_cards()
@@ -32,7 +38,10 @@ class DobbleGame:
         self.clock = pygame.time.Clock()
         pygame.time.set_timer(
             self.player_failed_event,
-            random.randint((self.timeout - 2) * 1000, (self.timeout + 2) * 1000),
+            random.randint(
+                (self.timeout - 2) * 1000,
+                (self.timeout + 2) * 1000,
+            ),
         )
         self.run = True
 
@@ -50,7 +59,12 @@ class DobbleGame:
         pygame.display.update()
         pygame.time.wait(3000)
 
-    def draw_card(self, player: Union[Player, Computer], x: int, y: int) -> None:
+    def draw_card(
+        self,
+        player: Union[Player, Computer],
+        x: int,
+        y: int,
+    ) -> None:
         """Draw a single card for given player."""
         if player:
             if player.first_card():
@@ -83,18 +97,22 @@ class DobbleGame:
                 if event.type == pygame.QUIT:
                     self.run = False
                 elif event.type == pygame.MOUSEBUTTONUP:
-                    pygame.time.set_timer(
-                        self.player_failed_event, self.game.set_timeout() * 1000
-                    )
+                    timeout = self.game.set_timeout() * 1000
+                    pygame.time.set_timer(self.player_failed_event, timeout)
                     mouse_pos = pygame.mouse.get_pos()
                     clicked_symbol = self.game.player.first_card().handle_click(
                         mouse_pos
                     )
                     if clicked_symbol is not None:
                         if clicked_symbol in self.game.middlecard.symbols:
-                            self.game.change_middle_card(self.game.player.first_card())
-                            self.game.player.remove_card(self.game.player.first_card())
-                            if self.game.verify_if_game_has_ended() == "You win.":
+                            self.game.change_middle_card(
+                                self.game.player.first_card(),
+                            )
+                            self.game.player.remove_card(
+                                self.game.player.first_card(),
+                            )
+                            win = "You win."
+                            if self.game.verify_if_game_has_ended() == win:
                                 self.display_message("YOU WIN!", BLUE)
                                 self.run = False
                                 break
