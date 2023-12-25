@@ -2,11 +2,16 @@ from dobblegame_pygame import DobbleGame
 from ui_menu import Menu
 
 
-def main():
-    """Handle Dobble game in a pygame environment.
-    Uses class Menu() to fetch data. Menu() is
-    displayed from tkinter module.
+def main() -> None:
+    """
+    Handle Dobble game in a pygame environment.
 
+    This function sets up and executes a pygame-based version of the
+    Dobble (Spot It!) game.
+    It uses the Menu class to fetch game parameters.
+    The Menu is displayed using the tkinter module.
+
+    :return: None
     """
     menu = Menu()
     game_parameters = menu.get_game_parameters()

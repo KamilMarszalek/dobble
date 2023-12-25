@@ -1,11 +1,11 @@
 from pack import generate_pack
 from card import Card
-from exceptions import DiffLevelError, InvalidComputersAmount, SymbolsError
+from typing import Union, Optional
 from random import choice, randint
+from exceptions import DiffLevelError, InvalidComputersAmount, SymbolsError
 from player import Player
 from computer import Computer
 from input_with_timeout import input_with_timeout
-from typing import Union, Optional
 from constants import (
     MAX_COMPUTERS,
     MIN_COMPUTERS,
@@ -16,22 +16,32 @@ from constants import (
 
 
 class Game:
-    """Class Game represents a whole game of dobble.
-    It handle every element of the game.
+    """
+    Class Game represents a whole game of dobble.
+    It handles every element of the game.
     Calling play method enables to play in the terminal.
-    Contains attributes:
-    :param amount_of_computers: amount of computers participating in a game
-    (from 1 to 3)
-    :type symbols: int
+
+    :param amount_of_computers: amount of computers participating in a game (from 1 to 3)
+    :type amount_of_computers: int
     :param diff_level: difficulty level of the game (from 1 to 3)
-    :type: int
+    :type diff_level: int
     :param number_of_symbols: amount of symbols on a single card (from 3 to 8)
-    :type: int
+    :type number_of_symbols: int
     """
 
     def __init__(
         self, amount_of_computers: int, diff_level: int, number_of_symbols: int
     ) -> None:
+        """
+        Initialize the Game class.
+
+        :param amount_of_computers: amount of computers participating in a game
+        :type amount_of_computers: int
+        :param diff_level: difficulty level of the game
+        :type diff_level: int
+        :param number_of_symbols: amount of symbols on a single card
+        :type number_of_symbols: int
+        """
         self._levels: list[int] = LEVELS
         if (
             amount_of_computers > MAX_COMPUTERS
@@ -56,10 +66,21 @@ class Game:
 
     @property
     def amount_of_computers(self) -> int:
+        """
+        Return amount of computer players.
+
+        :return: amount of computer players
+        :rtype: int
+        """
         return self._amount_of_computers
 
     def set_timeout(self) -> int:
-        """According to difficulty level it sets right timeout"""
+        """
+        According to difficulty level it sets right timeout.
+
+        :return: timeout value
+        :rtype: int
+        """
         if self.diff_level == 1:
             self._timeout: int = 25
         elif self.diff_level == 2:
@@ -70,14 +91,32 @@ class Game:
 
     @amount_of_computers.setter
     def amount_of_computers(self, amount: int) -> None:
+        """
+        Set the amount of computer players.
+
+        :param amount: new amount of computer players
+        :type amount: int
+        """
         self._amount_of_computers: int = amount
 
     @property
     def diff_level(self) -> int:
+        """
+        Get the difficulty level of the game.
+
+        :return: difficulty level of the game
+        :rtype: int
+        """
         return self._diff_level
 
     @diff_level.setter
     def diff_level(self, new_level: int) -> None:
+        """
+        Set the difficulty level of the game.
+
+        :param new_level: new difficulty level of the game
+        :type new_level: int
+        """
         if new_level not in self._levels:
             text_error = "Difficulty level not found in the available options."
             raise DiffLevelError(text_error)
@@ -85,14 +124,28 @@ class Game:
 
     @property
     def number_of_symbols(self) -> int:
+        """
+        Get the number of symbols on a single card.
+
+        :return: number of symbols on a single card
+        :rtype: int
+        """
         return self._numbers_of_symbols
 
     @number_of_symbols.setter
     def number_of_symbols(self, new_number_of_symbols: int) -> None:
+        """
+        Set the number of symbols on a single card.
+
+        :param new_number_of_symbols: new number of symbols on a single card
+        :type new_number_of_symbols: int
+        """
         self._numbers_of_symbols: int = new_number_of_symbols
 
     def create_cards(self) -> None:
-        """Creates a pack of already shuffled cards."""
+        """
+        Creates a pack of already shuffled cards.
+        """
         self._cards: list = []
         for card in self._pack:
             self._cards.append(Card(card))
@@ -102,7 +155,16 @@ class Game:
     def deal_one_player(
         self, number_of_cards: int, name: str = ""
     ) -> Union[Player, Computer]:
-        """Deals cards to one player only"""
+        """
+        Deals cards to one player only.
+
+        :param number_of_cards: amount of cards to be given to a player
+        :type number_of_cards: int
+        :param name: it is given to distinguish computer player from real player
+        :type name: str
+        :return: Player or Computer object
+        :rtype: Union[Player, Computer]
+        """
         cards: list[Card] = []
         for _ in range(number_of_cards):
             chosen_card: Card = choice(self._cards)
@@ -114,7 +176,9 @@ class Game:
             return Computer(cards, name)
 
     def deal(self) -> None:
-        """Deals cards between players."""
+        """
+        Deals cards between players.
+        """
         middlecard: Card = choice(self._cards)
         self.middlecard: Card = middlecard
         self._cards.remove(middlecard)
@@ -160,12 +224,22 @@ class Game:
             self.comps = [self.computer_player1]
 
     def change_middle_card(self, card: Card) -> None:
-        """Enables to change the card on the table"""
+        """
+        Enables to change the card on the table.
+
+        :param card: a player who wins round lay his card on the middlecard
+        :type card: Card
+        """
         self.middlecard: Card = card
 
     def choose_winner(self) -> Computer:
-        """Chooses winner of a single round between computer players
-        if player did not answer right"""
+        """
+        Chooses winner of a single round between computer players
+        if player did not answer right.
+
+        :return: Computer object
+        :rtype: Computer
+        """
         if self._amount_of_computers == 3:
             winner: Computer = choice(
                 [
@@ -183,6 +257,12 @@ class Game:
         return winner
 
     def verify_if_game_has_ended(self) -> Optional[str]:
+        """
+        Verifies if the game has ended.
+
+        :return: Winning message if the game has ended, None otherwise
+        :rtype: Optional[str]
+        """
         if self.player.has_won():
             return "You win."
         for comp in self.comps:
@@ -190,7 +270,12 @@ class Game:
                 return f"{comp.name} wins."
 
     def player_failed(self) -> Optional[bool]:
-        """Handles situation if player did not manage to find common symbol."""
+        """
+        Handles situation if player did not manage to find common symbol.
+
+        :return: True if the player failed, None otherwise
+        :rtype: Optional[bool]
+        """
         winner = self.choose_winner()
         symbol = winner.common_symbol(self.middlecard)
         print(f"{winner.name} has won this round. Common symbol: {symbol}")
@@ -201,7 +286,9 @@ class Game:
             return True
 
     def play(self) -> None:
-        """Interface of the game"""
+        """
+        Interface of the game.
+        """
         while self.player.cards:
             print(self.middlecard.symbols)
             print(self.player.first_card().symbols)

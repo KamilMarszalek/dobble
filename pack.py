@@ -1,68 +1,17 @@
 import random
-
-NUMBERS_IN_POLISH = {
-    1: "jeden",
-    2: "dwa",
-    3: "trzy",
-    4: "cztery",
-    5: "pięć",
-    6: "sześć",
-    7: "siedem",
-    8: "osiem",
-    9: "dziewięć",
-    10: "dziesięć",
-    11: "jedenaście",
-    12: "dwanaście",
-    13: "trzynaście",
-    14: "czternaście",
-    15: "piętnaście",
-    16: "szesnaście",
-    17: "siedemnaście",
-    18: "osiemnaście",
-    19: "dziewiętnaście",
-    20: "dwadzieścia",
-    21: "dwadzieścia jeden",
-    22: "dwadzieścia dwa",
-    23: "dwadzieścia trzy",
-    24: "dwadzieścia cztery",
-    25: "dwadzieścia pięć",
-    26: "dwadzieścia sześć",
-    27: "dwadzieścia siedem",
-    28: "dwadzieścia osiem",
-    29: "dwadzieścia dziewięć",
-    30: "trzydzieści",
-    31: "trzydzieści jeden",
-    32: "trzydzieści dwa",
-    33: "trzydzieści trzy",
-    34: "trzydzieści cztery",
-    35: "trzydzieści pięć",
-    36: "trzydzieści sześć",
-    37: "trzydzieści siedem",
-    38: "trzydzieści osiem",
-    39: "trzydzieści dziewięć",
-    40: "czterdzieści",
-    41: "czterdzieści jeden",
-    42: "czterdzieści dwa",
-    43: "czterdzieści trzy",
-    44: "czterdzieści cztery",
-    45: "czterdzieści pięć",
-    46: "czterdzieści sześć",
-    47: "czterdzieści siedem",
-    48: "czterdzieści osiem",
-    49: "czterdzieści dziewięć",
-    50: "pięćdziesiąt",
-    51: "pięćdziesiąt jeden",
-    52: "pięćdziesiąt dwa",
-    53: "pięćdziesiąt trzy",
-    54: "pięćdziesiąt cztery",
-    55: "pięćdziesiąt pięć",
-    56: "pięćdziesiąt sześć",
-    57: "pięćdziesiąt siedem",
-}
+from constants import NUMBERS_IN_POLISH
 
 
 def generate_pack(number_of_symbols: int) -> list[list[str]]:
-    """Generate a pack of dobble cards."""
+    """
+    Generate a pack of dobble cards.
+
+    :param number_of_symbols: amount of symbols on a single card
+    :type number_of_symbols: int
+    :return: a pack of dobble cards
+    :rtype: list[list[str]]
+    :raises ValueError: if number of symbols is not between 3 and 8
+    """
     if number_of_symbols < 3 or number_of_symbols > 8:
         raise ValueError("Number of symbols must be between 3 and 8.")
     numbers_of_symbols = number_of_symbols
@@ -86,6 +35,18 @@ def generate_pack(number_of_symbols: int) -> list[list[str]]:
 def generate_approximate_dobble_pack(
     total_symbols, symbols_per_card, max_cards
 ) -> list[list[str]]:
+    """
+    Generate an approximate dobble pack for 7 symbols on a card.
+
+    :param total_symbols: amount of total symbols which can be used
+    :type total_symbols: int
+    :param symbols_per_card: amount of symbols on a single card
+    :type symbols_per_card: int
+    :param max_cards: amount of cards to be generated
+    :type max_cards: int
+    :return: an approximate dobble pack
+    :rtype: list[list[str]]
+    """
     symbols = list(range(1, total_symbols + 1))
     pack = []
     ready_pack = []

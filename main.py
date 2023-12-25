@@ -2,7 +2,8 @@ from game import Game
 
 
 def main() -> None:
-    """Handle Dobble game in a terminal environment.
+    """
+    Handle Dobble game in a terminal environment.
 
     This function sets up and executes a terminal-based version of the
     Dobble (Spot It!) game.
@@ -13,6 +14,7 @@ def main() -> None:
     Note:
         The terminal must be Unix-based for optimal gameplay experience.
 
+    :return: None
     """
     computers = input(
         "How many opponents would you like to have (1, 2 or 3)?: ",
