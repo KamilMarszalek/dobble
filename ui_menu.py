@@ -1,3 +1,4 @@
+from typing import Optional
 import tkinter as tk
 from constants import (
     MIN_COMPUTERS,
@@ -90,12 +91,13 @@ class Menu:
         )
         self.window.destroy()
 
-    def get_game_parameters(self) -> tuple[int, int, int]:
+    def get_game_parameters(self) -> Optional[tuple[int, int, int]]:
         """
-        Get the game parameters.
+        Fetch game parameters.
 
-        :return: The game parameters.
-        :rtype: tuple[int, int, int]
+        :return: A tuple containing the number of computers, difficulty level, and number of symbols.
+                 Returns None if the parameters could not be fetched.
+        :rtype: Optional[tuple[int, int, int]]
         """
         return self.game_parameters
 

@@ -269,20 +269,24 @@ class Game:
             if comp.has_won():
                 return f"{comp.name} wins."
 
-    def player_failed(self) -> Optional[bool]:
+    def player_failed(self, should_print: bool = False) -> Optional[bool]:
         """
         Handles situation if player did not manage to find common symbol.
 
+        :param should_print: describe if method should print or not
+        :type should_print: bool
         :return: True if the player failed, None otherwise
         :rtype: Optional[bool]
         """
         winner = self.choose_winner()
-        symbol = winner.common_symbol(self.middlecard)
-        print(f"{winner.name} has won this round. Common symbol: {symbol}")
+        symbol = winner.get_common_symbol(self.middlecard)
+        if should_print:
+            print(f"{winner.name} has won this round. Common symbol: {symbol}")
         self.change_middle_card(winner.first_card())
         winner.remove_card(winner.first_card())
         if winner.has_won():
-            print(f"{winner.name} winning it all! It runs out of cards.")
+            if should_print:
+                print(f"{winner.name} winning it all! It runs out of cards.")
             return True
 
     def play(self) -> None:
@@ -298,7 +302,7 @@ class Game:
                 randint(self._timeout - 2, self._timeout + 2),
             )
             if not answer:
-                if self.player_failed():
+                if self.player_failed(should_print=True):
                     break
             else:
                 if (
@@ -313,5 +317,5 @@ class Game:
                         break
                 else:
                     print("Wrong answer")
-                    if self.player_failed():
+                    if self.player_failed(should_print=True):
                         break

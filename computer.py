@@ -24,7 +24,7 @@ class Computer(Player):
         :type name: str
         """
         if not name:
-            raise EmptyNameError("Name cannot be empty")
+            raise EmptyNameError("Computer player name cannot be empty")
         super().__init__(cards)
         self._name: str = name
 
@@ -47,10 +47,10 @@ class Computer(Player):
         :type new_name: str
         """
         if not new_name:
-            raise EmptyNameError("Name cannot be empty")
+            raise EmptyNameError("Computer player name cannot be empty")
         self._name = new_name
 
-    def common_symbol(self, card: Card) -> str:
+    def get_common_symbol(self, card: Card) -> str:
         """
         Finds the common symbol between the first card
         in computer's pack and the given card.

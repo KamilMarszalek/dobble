@@ -1,5 +1,6 @@
 from random import shuffle
 from typing import Optional, Union
+from pygame import Rect
 import pygame
 from exceptions import SymbolsError
 from constants import RED, WHITE, CARD_WIDTH, CARD_HEIGHT
@@ -21,7 +22,7 @@ class Card:
         :type symbols: list[str]
         """
         self._symbols: list[str] = symbols
-        self._symbol_rects = []
+        self._symbol_rects: list[tuple[str, Rect]] = []
 
     @property
     def symbols(self) -> list[str]:
@@ -86,12 +87,13 @@ class Card:
             text_rect = text_surface.get_rect(topleft=(symbol_x, symbol_y))
             self._symbol_rects.append((symbol, text_rect))
 
-    def handle_click(self, pos) -> Optional[str]:
+    def handle_click(self, pos: tuple[int, int]) -> Optional[str]:
         """
         Handles a click event. If symbol is clicked,
         returns the symbol. If no symbol is clicked, returns None.
 
         :param pos: position of cursor when click was done
+        :type pos: tuple[int, int]
         :return: clicked symbol or None
         :rtype: Optional[str]
         """
