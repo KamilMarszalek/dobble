@@ -1,5 +1,5 @@
 # Dobble Game Project Documentation
-# Author: Kamil Marszałek
+## Author: Kamil Marszałek
 
 ## Overview
 My assignment was to implement Dobble Game. I had to enable user to choose:
