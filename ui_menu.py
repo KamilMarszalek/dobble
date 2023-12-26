@@ -95,7 +95,9 @@ class Menu:
         """
         Fetch game parameters.
 
-        :return: A tuple containing the number of computers, difficulty level, and number of symbols.
+        :return: A tuple containing the number of computers,
+                 difficulty level,
+                 and number of symbols.
                  Returns None if the parameters could not be fetched.
         :rtype: Optional[tuple[int, int, int]]
         """

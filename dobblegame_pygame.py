@@ -12,7 +12,9 @@ class DobbleGame:
     Class DobbleGame represents a whole game of dobble in pygame.
     It uses methods of class Game to run the game in pygame.
 
-    :param amount_of_computers: amount of computers participating in a game (from 1 to 3)
+    :param amount_of_computers: amount of computers
+                                participating in a game
+                                (from 1 to 3)
     :type amount_of_computers: int
     :param diff_level: difficulty level of the game (from 1 to 3)
     :type diff_level: int

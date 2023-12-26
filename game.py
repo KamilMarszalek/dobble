@@ -21,7 +21,8 @@ class Game:
     It handles every element of the game.
     Calling play method enables to play in the terminal.
 
-    :param amount_of_computers: amount of computers participating in a game (from 1 to 3)
+    :param amount_of_computers: amount of computers participating in a game
+                                (from 1 to 3)
     :type amount_of_computers: int
     :param diff_level: difficulty level of the game (from 1 to 3)
     :type diff_level: int
@@ -160,7 +161,8 @@ class Game:
 
         :param number_of_cards: amount of cards to be given to a player
         :type number_of_cards: int
-        :param name: it is given to distinguish computer player from real player
+        :param name: it is given to distinguish computer player
+                    from real player
         :type name: str
         :return: Player or Computer object
         :rtype: Union[Player, Computer]
