@@ -7,11 +7,12 @@ from constants import (
     MIN_DIFF_LEVEL,
     MIN_SYMBOLS,
     MAX_SYMBOLS,
+    RED_M,
+    PINK,
+    GREEN,
+    YELLOW,
 )
-PINK = "#e2979c"
-RED = "#e7305b"
-GREEN = "#9bdeac"
-YELLOW = "#f7f5dd"
+
 
 def rgb_to_hex(rgb):
     """
@@ -117,7 +118,7 @@ class Menu:
             text="How many opponents would you like to play with?",
             font=("Arial", 20, "normal"),
             bg=YELLOW,
-            fg=GREEN
+            fg=GREEN,
         )
         computers_label.pack(pady=20)
 
@@ -127,10 +128,10 @@ class Menu:
             command=self.get_amount_of_computers,
             orient="horizontal",
             bg=YELLOW,
-            fg=RED,
+            fg=RED_M,
             highlightthickness=0,
             troughcolor=PINK,
-            sliderrelief='flat'
+            sliderrelief="flat",
         )
         computers.pack(pady=20)
         diff_level_text = (
@@ -140,7 +141,7 @@ class Menu:
             text=diff_level_text,
             font=("Arial", 20, "normal"),
             bg=YELLOW,
-            fg=GREEN
+            fg=GREEN,
         )
         diff_level_label.pack(pady=20)
 
@@ -150,10 +151,10 @@ class Menu:
             command=self.get_diff_level,
             orient="horizontal",
             bg=YELLOW,
-            fg=RED,
+            fg=RED_M,
             highlightthickness=0,
             troughcolor=PINK,
-            sliderrelief='flat'
+            sliderrelief="flat",
         )
         diff_level.pack(pady=20)
 
@@ -161,7 +162,7 @@ class Menu:
             text="How many symbols on a card?",
             font=("Arial", 20, "normal"),
             bg=YELLOW,
-            fg=GREEN
+            fg=GREEN,
         )
         amount_of_symbols_label.pack(pady=20)
 
@@ -171,15 +172,15 @@ class Menu:
             command=self.get_amount_of_symbols,
             orient="horizontal",
             bg=YELLOW,
-            fg=RED,
+            fg=RED_M,
             highlightthickness=0,
             troughcolor=PINK,
-            sliderrelief='flat'
+            sliderrelief="flat",
         )
         amount_of_symbols.pack(pady=20)
         start_button = tk.Button(
             text="START", font=("Arial", 20, "normal"), command=self.start_game
         )
-        start_button.config(bg="white", fg=RED, highlightthickness=0)
+        start_button.config(bg="white", fg=RED_M, highlightthickness=0)
         start_button.pack(pady=20)
         self.window.mainloop()
