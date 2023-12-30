@@ -2,7 +2,6 @@ from random import shuffle
 from typing import Optional, Union
 from pygame import Rect
 import pygame
-from exceptions import SymbolsError
 from constants import RED, WHITE, CARD_WIDTH, CARD_HEIGHT
 
 
@@ -33,21 +32,6 @@ class Card:
         :rtype: list[str]
         """
         return self._symbols
-
-    @symbols.setter
-    def symbols(self, symbols: list[str]) -> None:
-        """
-        Sets the symbols on the card,
-        ensuring the new symbols have the same length as the old ones.
-
-        :param symbols: symbols
-        :type symbols: list[str]
-        """
-        if len(symbols) != len(self._symbols):
-            raise SymbolsError(
-                "Length of new symbols is not equal to the previous one."
-            )
-        self._symbols = symbols
 
     def shuffle_symbols(self) -> None:
         """
