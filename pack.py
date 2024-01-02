@@ -12,23 +12,50 @@ def generate_pack(number_of_symbols: int) -> list[list[str]]:
     :rtype: list[list[str]]
     :raises ValueError: if number of symbols is not between 3 and 8
     """
-    if number_of_symbols < 3 or number_of_symbols > 8:
+
+    if not 3 <= number_of_symbols <= 8:
         raise ValueError("Number of symbols must be between 3 and 8.")
-    numbers_of_symbols = number_of_symbols
-    pack = []
-    n = numbers_of_symbols - 1  # n must be a power of prime number
-    if n == 6:  # for 7 symbols per card standard approach cannot be applied
+
+    # base_number is used for calculations to generate the correct sequences of symbols
+
+    base_number = (
+        number_of_symbols - 1
+    )  # base_number must be a power of prime number
+
+    # Handle the special case where the standard generation method doesn't apply
+
+    if base_number == 6:
         return generate_approximate_dobble_pack(43, 7, 43)
-    for i in range(n + 1):
-        pack.append([NUMBERS_IN_POLISH[1]])
-        for j in range(n):
-            pack[i].append(NUMBERS_IN_POLISH[(j + 1) + (i * n) + 1])
-    for i in range(0, n):
-        for j in range(0, n):
-            pack.append([NUMBERS_IN_POLISH[i + 2]])
-            for k in range(0, n):
-                value = (n + 1 + n * k + (i * k + j) % n) + 1
-                pack[len(pack) - 1].append(NUMBERS_IN_POLISH[value])
+
+    pack = []
+
+    # Generate the first set of cards
+    for card_index in range(base_number + 1):
+        # Each card starts with the first symbol
+        card = [NUMBERS_IN_POLISH[1]]
+        # Add subsequent symbols based on the current card index
+        for row_index in range(base_number):
+            symbol_index = (row_index + 1) + (card_index * base_number) + 1
+            card.append(NUMBERS_IN_POLISH[symbol_index])
+        pack.append(card)
+
+    # Generate the remaining sets of cards
+    for row_index in range(base_number):
+        for column_index in range(base_number):
+            # Each card starts with a new symbol based on the row_index
+            card = [NUMBERS_IN_POLISH[row_index + 2]]
+            # Add subsequent symbols based on a calculated value
+            for value_index in range(base_number):
+                # Calculate the value for the current position
+                calc_value = (
+                    base_number
+                    + 1
+                    + base_number * value_index
+                    + (row_index * value_index + column_index) % base_number
+                ) + 1
+                card.append(NUMBERS_IN_POLISH[calc_value])
+            pack.append(card)
+
     return pack
 
 
