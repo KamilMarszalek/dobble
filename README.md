@@ -88,7 +88,7 @@ so I decided to create it in an approximate way.
 This might not exactly match Dobble rules. 
 Using the standard way to generate symbols, 
 some cards had no common symbol. 
-Therefore, I think it is better to have two or 
-maybe three common symbols on a card, 
+Therefore, I think it is better to have two 
+or maybe three common symbols on a card, 
 ensuring that at least one common symbol 
 is always present.</p>
