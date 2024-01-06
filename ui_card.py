@@ -1,4 +1,7 @@
 from typing import Union, Optional
+import os
+
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 import pygame
 from constants import WHITE, CARD_HEIGHT, CARD_WIDTH, RED
 from card import Card
