@@ -66,11 +66,12 @@ I changed my mind and started working on
 a GUI version in the <u>pygame</u> module. 
 I considered using images on the cards, 
 but it seemed time-consuming to make 57 graphics.
-So I used again the same dictionary with numbers in polish.
-After creating GUI version I spotted an issue with starting the game,
-it still had been using terminal to gain information required to start the game.
+So I used again the same dictionary with numbers in Polish.
+After creating GUI version, I spotted an issue with starting the game,
+it was still using the terminal to gather 
+the information required to start the game.
 Then I decided to make a GUI menu.
-I chose the Tkinter module, due to its simplicity.
+I chose the Tkinter module due to its simplicity.
 After completing it, I began refactoring my code.
 I managed to simplify it slightly.
 After that I asked for a code review.
@@ -79,4 +80,13 @@ had not been respecting SOLID principles
 and others had been hard to read.
 The issues were related with Card and Player class.
 I think that I managed to fix Card class,
-but I do not have idea how to fix Player. 
+but I do not have an idea how to fix the Player class.
+I found it difficult to make a pack of cards for five or seven symbols, 
+so I decided to create it in an approximate way. 
+This might not exactly match Dobble rules. 
+Using the standard way to generate symbols, 
+some cards had no common symbol. 
+Therefore, I think it is better to have two or 
+maybe three common symbols on a card, 
+ensuring that at least one common symbol 
+is always present.

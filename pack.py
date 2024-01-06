@@ -18,14 +18,14 @@ def generate_pack(number_of_symbols: int) -> list[list[str]]:
 
     # base_number is used for calculations to generate the correct sequences of symbols
 
-    base_number = (
-        number_of_symbols - 1
-    )  # base_number must be a power of prime number
+    base_number = number_of_symbols - 1  # base_number must be a prime number
 
     # Handle the special case where the standard generation method doesn't apply
 
     if base_number == 6:
         return generate_approximate_dobble_pack(43, 7, 43)
+    if base_number == 4:
+        return generate_approximate_dobble_pack(21, 5, 21)
 
     pack = []
 
@@ -63,7 +63,7 @@ def generate_approximate_dobble_pack(
     total_symbols, symbols_per_card, max_cards
 ) -> list[list[str]]:
     """
-    Generate an approximate dobble pack for 7 symbols on a card.
+    Generate an approximate dobble pack for 5 or 7 symbols on a card.
 
     :param total_symbols: amount of total symbols which can be used
     :type total_symbols: int
