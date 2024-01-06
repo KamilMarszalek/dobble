@@ -83,9 +83,9 @@ class Menu:
         """
         self.amount_of_symbols = int(value)
 
-    def start_game(self) -> None:
+    def close_menu(self) -> None:
         """
-        Close the window of menu and start dobble game.
+        Close the window of menu.
 
         :return: None
         """
@@ -179,7 +179,7 @@ class Menu:
         )
         amount_of_symbols.pack(pady=20)
         start_button = tk.Button(
-            text="START", font=("Arial", 20, "normal"), command=self.start_game
+            text="START", font=("Arial", 20, "normal"), command=self.close_menu
         )
         start_button.config(bg="white", fg=RED_M, highlightthickness=0)
         start_button.pack(pady=20)

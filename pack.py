@@ -85,5 +85,4 @@ def generate_approximate_dobble_pack(
             pack.append(new_card)
     for card in pack:
         ready_pack.append([NUMBERS_IN_POLISH[symbol] for symbol in card])
-    print(pack)
     return ready_pack

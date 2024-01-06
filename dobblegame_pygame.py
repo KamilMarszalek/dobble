@@ -5,6 +5,7 @@ from game import Game
 from constants import WIDTH, HEIGHT, FPS, BACKGROUND, BLUE, WHITE
 from player import Player
 from computer import Computer
+from ui_card import UICard
 
 
 class DobbleGame:
@@ -98,14 +99,16 @@ class DobbleGame:
         """
         if player:
             if player.first_card():
-                player.first_card().draw_card(self.win, x, y)
+                UICard.draw_card(
+                    player.first_card(), self.win, x, y, player.name
+                )
 
     def draw_board(self):
         """
         Calls draw_card to draw cards for all players.
         """
         self.draw_card(self.game.player, 500, 700)
-        self.game.middlecard.draw_card(self.win, 500, 375)
+        UICard.draw_card(self.game.middlecard, self.win, 500, 375)
         self.draw_card(self.game.computer_player1, 500, 25)
         self.draw_card(self.game.computer_player2, 900, 375)
         self.draw_card(self.game.computer_player3, 100, 375)
@@ -139,8 +142,8 @@ class DobbleGame:
                     timeout = self.game.set_timeout() * 1000
                     pygame.time.set_timer(self.player_failed_event, timeout)
                     mouse_pos = pygame.mouse.get_pos()
-                    clicked_symbol = (
-                        self.game.player.first_card().handle_click(mouse_pos)
+                    clicked_symbol = UICard.handle_click(
+                        self.game.player.first_card(), mouse_pos
                     )
                     if clicked_symbol is not None:
                         if clicked_symbol in self.game.middlecard.symbols:

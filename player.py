@@ -9,7 +9,7 @@ class Player:
     :type cards: list[Card]
     """
 
-    def __init__(self, cards: list[Card]) -> None:
+    def __init__(self, cards: list[Card], name: str = "You") -> None:
         """
         Initialize the Player class.
 
@@ -17,6 +17,17 @@ class Player:
         :type cards: list[Card]
         """
         self.cards: list[Card] = cards
+        self._name: str = name
+
+    @property
+    def name(self):
+        """
+        Returns the name of the player.
+
+        :return: name of the player
+        :rtype: str
+        """
+        return self._name
 
     def first_card(self) -> Card:
         """
