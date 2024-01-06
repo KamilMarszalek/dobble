@@ -307,17 +307,39 @@ class Game:
                 if self.player_failed(should_print=True):
                     break
             else:
-                if (
-                    answer in self.middlecard.symbols
-                    and answer in self.player.first_card().symbols
-                ):
+                symbol_found, game_won = self.check_symbol(answer)
+                if symbol_found:
                     print("You're right")
-                    self.change_middle_card(self.player.first_card())
-                    self.player.remove_card(self.player.first_card())
-                    if self.player.has_won():
+                    if game_won:
                         print("You win")
                         break
                 else:
                     print("Wrong answer")
                     if self.player_failed(should_print=True):
                         break
+
+    def check_symbol(self, symbol: str) -> tuple[bool, bool]:
+        """
+        Checks if the provided symbol is in the middle card's symbols. If it is, changes the middle card to the player's first card,
+        removes the player's first card, and checks if the game has ended.
+
+        :param symbol: The symbol to check.
+        :type symbol: str
+        :return: A tuple where the first element is True if the symbol was in the middle card's symbols and False otherwise,
+                and the second element is True if the game has ended with a win and False otherwise.
+        :rtype: Tuple[bool, bool]
+        """
+        if symbol in self.middlecard.symbols:
+            self.change_middle_card(
+                self.player.first_card(),
+            )
+            self.player.remove_card(
+                self.player.first_card(),
+            )
+            win = "You win."
+            if self.verify_if_game_has_ended() == win:
+                return True, True
+            else:
+                return True, False
+        else:
+            return False, False

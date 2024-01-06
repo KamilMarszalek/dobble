@@ -100,7 +100,12 @@ class DobbleGame:
         if player:
             if player.first_card():
                 UICard.draw_card(
-                    player.first_card(), self.win, x, y, player.name
+                    player.first_card(),
+                    self.win,
+                    x,
+                    y,
+                    player.name,
+                    player.cards_left(),
                 )
 
     def draw_board(self):
@@ -129,8 +134,8 @@ class DobbleGame:
 
     def run_game(self) -> None:
         """
-        Handles the game of Dobble.
-        Handles events, draws cards
+        Handles the game of Dobble
+        in pygame.
         """
         while self.game_is_running:
             self.clock.tick(FPS)
@@ -146,18 +151,13 @@ class DobbleGame:
                         self.game.player.first_card(), mouse_pos
                     )
                     if clicked_symbol is not None:
-                        if clicked_symbol in self.game.middlecard.symbols:
-                            self.game.change_middle_card(
-                                self.game.player.first_card(),
-                            )
-                            self.game.player.remove_card(
-                                self.game.player.first_card(),
-                            )
-                            win = "You win."
-                            if self.game.verify_if_game_has_ended() == win:
-                                self.display_message("YOU WIN!", BLUE)
-                                self.game_is_running = False
-                                break
+                        result = self.game.check_symbol(clicked_symbol)
+                        if result == (True, True):
+                            self.display_message("YOU WIN!", BLUE)
+                            self.game_is_running = False
+                            break
+                        elif result == (True, False):
+                            pass
                         else:
                             self.player_failed()
                             if not self.game_is_running:

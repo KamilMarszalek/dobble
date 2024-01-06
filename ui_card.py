@@ -18,6 +18,7 @@ class UICard:
         x: Union[float, int],
         y: Union[float, int],
         player_name: str = None,
+        cards_left: int = None,
     ) -> None:
         """
         Draws the card's symbols on the given window at the given position.
@@ -36,8 +37,10 @@ class UICard:
         pygame.draw.rect(
             window, WHITE, (x, y, CARD_WIDTH, CARD_HEIGHT), border_radius=12
         )
-        if player_name:
-            name_surface = font.render(player_name, True, WHITE)
+        if player_name and cards_left:
+            name_surface = font.render(
+                f"{player_name}: {cards_left} cards left", True, WHITE
+            )
             window.blit(name_surface, (x, y - name_surface.get_height()))
 
         padding_beetween_symbols = CARD_HEIGHT / (len(card.symbols) + 2)

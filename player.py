@@ -56,3 +56,12 @@ class Player:
         :rtype: bool
         """
         return not self.cards
+
+    def cards_left(self) -> int:
+        """
+        Return amount of cards left.
+
+        :return: Amount of cards left.
+        :rtype: int
+        """
+        return len(self.cards)

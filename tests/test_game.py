@@ -626,7 +626,7 @@ def test_game_deal_one_player_name_given():
     assert type(computer) == Computer
 
 
-def test_game_deal_one_player__no_name_given():
+def test_game_deal_one_player_no_name_given():
     game = Game(3, 3, 8)
     game.create_cards()
     player = game.deal_one_player(14)
@@ -749,3 +749,51 @@ def test_game_player_failed_winner(monkeypatch):
     assert len(game.computer_player1.cards) == 0
     assert len(game.computer_player2.cards) == 14
     assert len(game.computer_player3.cards) == 14
+
+
+def test_game_check_symbol_player_wins_whole_game():
+    game = Game(3, 3, 3)
+    game.create_cards()
+    game.deal()
+    player_cards = [Card(["a", "b", "c"])]
+    middle_card = Card(["g", "a", "f"])
+    game.player = Player(player_cards)
+    assert game.player.cards == player_cards
+    game.middlecard = middle_card
+    assert game.check_symbol("a") == (True, True)
+    assert game.player.has_won() == True
+    assert game.player.cards_left() == 0
+
+
+def test_game_check_symbol_player_wins_round():
+    game = Game(3, 3, 3)
+    game.create_cards()
+    game.deal()
+    card1 = Card(["a", "b", "c"])
+    card2 = Card(["a", "d", "e"])
+    card3 = Card(["f", "e", "c"])
+    player_cards = [card1, card2, card3]
+    middle_card = Card(["g", "a", "f"])
+    game.player = Player(player_cards)
+    assert game.player.cards == player_cards
+    game.middlecard = middle_card
+    assert game.check_symbol("a") == (True, False)
+    assert game.player.cards_left() == 2
+    assert game.player.first_card() == card2
+
+
+def test_game_check_symbol_player_fails():
+    game = Game(3, 3, 3)
+    game.create_cards()
+    game.deal()
+    card1 = Card(["a", "b", "c"])
+    card2 = Card(["a", "d", "e"])
+    card3 = Card(["f", "e", "c"])
+    player_cards = [card1, card2, card3]
+    middle_card = Card(["g", "a", "f"])
+    game.player = Player(player_cards)
+    assert game.player.cards == player_cards
+    game.middlecard = middle_card
+    assert game.check_symbol("b") == (False, False)
+    assert game.player.cards_left() == 3
+    assert game.player.first_card() == card1
