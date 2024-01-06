@@ -2,7 +2,7 @@
 ## Author: Kamil Marszałek
 
 ## Overview
-My assignment was to implement Dobble Game. I had to enable user to choose:
+My assignment was to implement <span style="color: red;"><b>Dobble Game</b></span>. I had to enable user to choose:
 * how many computer player's to play with (from 1 to 3), 
 * what difficulty level (from 1 to 3),
 * how many symbols should be on a card (from 3 to 8).
@@ -19,33 +19,29 @@ Game ends when one of the players runs out of cards.
 ## Classes
 
 ### Card
-Class Card represents a single card. It contains symbols which are on a card. It has a method to shuffle symbols on a card and methods to draw the card.
-It also has an event handler which is called when on of the symbols is clicked.
+Class Card represents a single card. It contains symbols which are on a card.
+
+### UICard
+Class UICard has static methods to draw the card and handle clicking.
+It was created to separate this functions from class Card. 
 
 ### Player
-Class Player represents a user. It holds a collection of his cards which was given to him during dealing. It has a method to remove card. Also to check if he has won and returning first card 
-of his pack.
+Class Player represents a user.
+It holds a collection of his cards which was given to him during dealing.
+Also it holds the name of the player.
 
 ### Computer
 Class Computer represents a computer player in the game.
-It inherits from class Player. Additionaly it holds a name (id) of the computer player in order to make computers distinguishable. It has a method to find common symbol between given card and first card in the pack.
+It inherits from class Player.
 
 ### Game
 Class Game represents a whole game of dobble.
 It handles every element of the game.
 Calling play method enables to play in the terminal.
-It holds:
-* amount of computer players
-* difficulty level
-* number of symbols.
-During initialization there is verification of the given parameters.
-It also has method to set timeout according to difficulty level.
-There is also a method to create cards which are being shuffled.
-After creating cards the cards are being dealt.
-It also has methods to choose winner from computer players if user fails.
 
 ### Menu
-Class Menu represents the Dobble game menu. The menu is created using Tkinter package.
+Class Menu represents the Dobble game menu.
+The menu is created using Tkinter package.
 
 ### DobbleGame
 Class DobbleGame represents a whole game of dobble in pygame.
@@ -58,5 +54,17 @@ In order to play pygame version run ui_pygame.py you have to setup virtual envir
 requirements.txt.
 Tkinter module should be installed with python.
 
-
-
+## Reflective part
+I started creating my project on 25<sup>th</sup> November. 
+Firstly I decided to make my game in the terminal.
+The game was using only built-in packages:
+* termios
+* sys
+* select
+* random
+After creating the first-prototype, 
+I changed my mind and started working on
+a gui version in the pygame module. 
+I considered using images on the cards, 
+but it seemed time-consuming to make 57 graphics.
+So I used again the same dictionary with numbers in polish.
