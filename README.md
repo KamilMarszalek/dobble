@@ -61,6 +61,7 @@ The game was using only built-in packages:
 * sys
 * select
 * random
+<br>
 After creating the first prototype, 
 I changed my mind and started working on
 a GUI version in the <u>pygame</u> module. 
