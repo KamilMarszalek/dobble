@@ -54,13 +54,14 @@ In order to play the pygame version, run ui_pygame.py. You have to set up a virt
 The Tkinter module should be installed along with Python.
 
 ## Reflective part
-<p>I began my project on November 25<sup>th</sup>. 
+I began my project on November 25<sup>th</sup>. 
 Firstly I decided to make my game in the terminal.
 The game was using only built-in packages:
 * termios
 * sys
 * select
-* random</p>
+* random
+
 <br>
 <p>After creating the first prototype, 
 I changed my mind and started working on
