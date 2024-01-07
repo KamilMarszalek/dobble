@@ -13,4 +13,4 @@ def test_shuffle_symbols(monkeypatch):
     monkeypatch.setattr("card.shuffle", lambda card: [card[::-1]])
     card1 = Card(["a", "b", "c", "d"])
     card1.shuffle_symbols()
-    card1.symbols == ["d", "c", "b", "a"]
+    assert card1.symbols == ["d", "c", "b", "a"]
