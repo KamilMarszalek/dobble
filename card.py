@@ -1,7 +1,4 @@
 from random import shuffle
-import os
-
-os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 from pygame import Rect
 
 

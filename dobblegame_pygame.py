@@ -1,8 +1,5 @@
 import random
 from typing import Union, Optional
-import os
-
-os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 import pygame
 from game import Game
 from constants import WIDTH, HEIGHT, FPS, BACKGROUND, BLUE, WHITE
