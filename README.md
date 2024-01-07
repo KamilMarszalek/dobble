@@ -54,6 +54,7 @@ In order to play the pygame version, run ui_pygame.py. You have to set up a virt
 - `python3 -m venv .venv`
 - `source venv/bin/activate`
 - `pip install -r requirements.txt`
+<br>
 The Tkinter module should be installed along with Python.
 
 ## Reflective part
