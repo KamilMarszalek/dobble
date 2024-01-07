@@ -30,6 +30,10 @@ class UICard:
         :type x: Union[float, int]
         :param y: The y-coordinate where the card will be drawn.
         :type y: Union[float, int]
+        :param player_name: The name of the player who owns the card.
+        :type player_name: str
+        :param cards_left: The number of cards left in the player's hand.
+        :type cards_left: int
         """
         card.symbol_rects.clear()
         font = pygame.font.Font(None, 25)
