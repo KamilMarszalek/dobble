@@ -1,6 +1,4 @@
 from card import Card
-import pytest
-from exceptions import SymbolsError
 
 
 def test_card_create():
@@ -10,7 +8,10 @@ def test_card_create():
 
 
 def test_shuffle_symbols(monkeypatch):
-    monkeypatch.setattr("card.shuffle", lambda card: [card[::-1]])
+    def reverse_symbols(self):
+        self._symbols.reverse()
+
+    monkeypatch.setattr("card.Card.shuffle_symbols", reverse_symbols)
     card1 = Card(["a", "b", "c", "d"])
     card1.shuffle_symbols()
     assert card1.symbols == ["d", "c", "b", "a"]
