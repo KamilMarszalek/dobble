@@ -44,10 +44,7 @@ class Game:
         :type number_of_symbols: int
         """
         self._levels: list[int] = LEVELS
-        if (
-            amount_of_computers > MAX_COMPUTERS
-            or amount_of_computers < MIN_COMPUTERS
-        ):
+        if amount_of_computers > MAX_COMPUTERS or amount_of_computers < MIN_COMPUTERS:
             text_error = "Amount of enemies must be between 1 and 3."
             raise InvalidComputersAmount(text_error)
         self._amount_of_computers: int = amount_of_computers
@@ -320,13 +317,17 @@ class Game:
 
     def check_symbol(self, symbol: str) -> tuple[bool, bool]:
         """
-        Checks if the provided symbol is in the middle card's symbols. If it is, changes the middle card to the player's first card,
+        Checks if the provided symbol is in the middle card's symbols.
+        If it is, changes the middle card to the player's first card,
         removes the player's first card, and checks if the game has ended.
 
         :param symbol: The symbol to check.
         :type symbol: str
-        :return: A tuple where the first element is True if the symbol was in the middle card's symbols and False otherwise,
-                and the second element is True if the game has ended with a win and False otherwise.
+        :return: A tuple where the first element is True if
+                the symbol was in the middle card's symbols and
+                False otherwise.
+                The second element is True if
+                the game has ended with a win and False otherwise.
         :rtype: Tuple[bool, bool]
         """
         if symbol in self.middlecard.symbols:

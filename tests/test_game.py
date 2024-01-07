@@ -761,7 +761,7 @@ def test_game_check_symbol_player_wins_whole_game():
     assert game.player.cards == player_cards
     game.middlecard = middle_card
     assert game.check_symbol("a") == (True, True)
-    assert game.player.has_won() == True
+    assert game.player.has_won() is True
     assert game.player.cards_left() == 0
 
 

@@ -43,7 +43,11 @@ class DobbleGame:
         :type number_of_symbols: int
         """
         pygame.font.init()
-        self.game: Game = Game(amount_of_computers, diff_level, number_of_symbols)
+        self.game: Game = Game(
+            amount_of_computers,
+            diff_level,
+            number_of_symbols,
+        )
         self.game.create_cards()
         self.game.deal()
         self.timeout: int = self.game.set_timeout()

@@ -16,11 +16,13 @@ def generate_pack(number_of_symbols: int) -> list[list[str]]:
     if not 3 <= number_of_symbols <= 8:
         raise ValueError("Number of symbols must be between 3 and 8.")
 
-    # base_number is used for calculations to generate the correct sequences of symbols
+    # base_number is used for calculations to
+    # generate the correct sequences of symbols
 
     base_number = number_of_symbols - 1  # base_number must be a prime number
 
-    # Handle the special case where the standard generation method doesn't apply
+    # Handle the special case where
+    # the standard generation method doesn't apply
 
     if base_number == 6:
         return generate_approximate_dobble_pack(43, 7, 43)
