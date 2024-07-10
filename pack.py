@@ -34,7 +34,7 @@ def generate_pack(number_of_symbols: int) -> list[list[str]]:
     # Generate the first set of cards
     for card_index in range(base_number + 1):
         # Each card starts with the first symbol
-        card = [f"{card_index + 1}"]
+        card = ["1"]
         # Add subsequent symbols based on the current card index
         for row_index in range(base_number):
             symbol_index = (row_index + 1) + (card_index * base_number) + 1
