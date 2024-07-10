@@ -2,6 +2,7 @@ from typing import Union, Optional
 import pygame
 from constants import WHITE, CARD_HEIGHT, CARD_WIDTH, RED
 from card import Card
+import os
 
 
 class UICard:
@@ -21,7 +22,7 @@ class UICard:
         cards_left: int = None,
     ) -> None:
         """
-        Draws the card's symbols on the given window at the given position.
+        Draws the card's symbols (images) on the given window at the given position.
 
         :param card: The card to be drawn.
         :type card: Card
@@ -41,23 +42,51 @@ class UICard:
         pygame.draw.rect(
             window, WHITE, (x, y, CARD_WIDTH, CARD_HEIGHT), border_radius=12
         )
-        if player_name and cards_left:
+        if player_name and cards_left is not None:
             name_surface = font.render(
                 f"{player_name}: {cards_left} cards left", True, WHITE
             )
             window.blit(name_surface, (x, y - name_surface.get_height()))
 
         padding_beetween_symbols = CARD_HEIGHT / (len(card.symbols) + 2)
-        for i, symbol in enumerate(card.symbols):
-            symbol_x = 10 + x
-            symbol_y = y + padding_beetween_symbols * (i + 1)
+        if len(card.symbols) == 8:
+            for i, symbol in enumerate(card.symbols):
+                if i % 2 == 0:
+                    symbol_x = 30 + x
+                    symbol_y = y + padding_beetween_symbols * (i + 1)
 
-            text_surface = font.render(symbol, True, RED)
+                    # Load image for the symbol
+                    image_path = os.path.join(
+                        "resources",
+                        f"00{symbol}.png" if int(symbol) < 10 else f"0{symbol}.png",
+                    )
+                    symbol_image = pygame.image.load(image_path)
+                    symbol_image = pygame.transform.scale(
+                        symbol_image, (50, 50)
+                    )  # Resize as needed
 
-            window.blit(text_surface, (symbol_x, symbol_y))
+                    window.blit(symbol_image, (symbol_x, symbol_y))
 
-            text_rect = text_surface.get_rect(topleft=(symbol_x, symbol_y))
-            card.symbol_rects.append((symbol, text_rect))
+                    text_rect = symbol_image.get_rect(topleft=(symbol_x, symbol_y))
+                    card.symbol_rects.append((symbol, text_rect))
+                else:
+                    symbol_x = 115 + x
+                    symbol_y = y + padding_beetween_symbols * i
+
+                    # Load image for the symbol
+                    image_path = os.path.join(
+                        "resources",
+                        f"00{symbol}.png" if int(symbol) < 10 else f"0{symbol}.png",
+                    )
+                    symbol_image = pygame.image.load(image_path)
+                    symbol_image = pygame.transform.scale(
+                        symbol_image, (50, 50)
+                    )  # Resize as needed
+
+                    window.blit(symbol_image, (symbol_x, symbol_y))
+
+                    text_rect = symbol_image.get_rect(topleft=(symbol_x, symbol_y))
+                    card.symbol_rects.append((symbol, text_rect))
 
     @staticmethod
     def handle_click(card: Card, pos: tuple[int, int]) -> Optional[str]:

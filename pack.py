@@ -34,18 +34,18 @@ def generate_pack(number_of_symbols: int) -> list[list[str]]:
     # Generate the first set of cards
     for card_index in range(base_number + 1):
         # Each card starts with the first symbol
-        card = [NUMBERS_IN_POLISH[1]]
+        card = [f"{card_index + 1}"]
         # Add subsequent symbols based on the current card index
         for row_index in range(base_number):
             symbol_index = (row_index + 1) + (card_index * base_number) + 1
-            card.append(NUMBERS_IN_POLISH[symbol_index])
+            card.append(f"{symbol_index}")
         pack.append(card)
 
     # Generate the remaining sets of cards
     for row_index in range(base_number):
         for column_index in range(base_number):
             # Each card starts with a new symbol based on the row_index
-            card = [NUMBERS_IN_POLISH[row_index + 2]]
+            card = [f"{row_index + 2}"]
             # Add subsequent symbols based on a calculated value
             for value_index in range(base_number):
                 # Calculate the value for the current position
@@ -55,7 +55,7 @@ def generate_pack(number_of_symbols: int) -> list[list[str]]:
                     + base_number * value_index
                     + (row_index * value_index + column_index) % base_number
                 ) + 1
-                card.append(NUMBERS_IN_POLISH[calc_value])
+                card.append(f"{calc_value}")
             pack.append(card)
 
     return pack

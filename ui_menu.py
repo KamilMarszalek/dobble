@@ -49,7 +49,7 @@ class Menu:
         self.window.config(bg=YELLOW)
         self.amount_of_computers = MIN_COMPUTERS
         self.diff_level = MIN_DIFF_LEVEL
-        self.amount_of_symbols = MIN_SYMBOLS
+        self.amount_of_symbols = MAX_SYMBOLS
         self.game_parameters = None
         self.display_menu()
 
@@ -134,9 +134,7 @@ class Menu:
             sliderrelief="flat",
         )
         computers.pack(pady=20)
-        diff_level_text = (
-            "What difficulty level do you feel like challenging yourself?"
-        )
+        diff_level_text = "What difficulty level do you feel like challenging yourself?"
         diff_level_label = tk.Label(
             text=diff_level_text,
             font=("Arial", 20, "normal"),
@@ -158,26 +156,26 @@ class Menu:
         )
         diff_level.pack(pady=20)
 
-        amount_of_symbols_label = tk.Label(
-            text="How many symbols on a card?",
-            font=("Arial", 20, "normal"),
-            bg=YELLOW,
-            fg=GREEN,
-        )
-        amount_of_symbols_label.pack(pady=20)
+        # amount_of_symbols_label = tk.Label(
+        #     text="How many symbols on a card?",
+        #     font=("Arial", 20, "normal"),
+        #     bg=YELLOW,
+        #     fg=GREEN,
+        # )
+        # amount_of_symbols_label.pack(pady=20)
 
-        amount_of_symbols = tk.Scale(
-            from_=MIN_SYMBOLS,
-            to=MAX_SYMBOLS,
-            command=self.get_amount_of_symbols,
-            orient="horizontal",
-            bg=YELLOW,
-            fg=RED_M,
-            highlightthickness=0,
-            troughcolor=PINK,
-            sliderrelief="flat",
-        )
-        amount_of_symbols.pack(pady=20)
+        # amount_of_symbols = tk.Scale(
+        #     from_=MIN_SYMBOLS,
+        #     to=MAX_SYMBOLS,
+        #     command=self.get_amount_of_symbols,
+        #     orient="horizontal",
+        #     bg=YELLOW,
+        #     fg=RED_M,
+        #     highlightthickness=0,
+        #     troughcolor=PINK,
+        #     sliderrelief="flat",
+        # )
+        # amount_of_symbols.pack(pady=20)
         start_button = tk.Button(
             text="START", font=("Arial", 20, "normal"), command=self.close_menu
         )
